@@ -18,10 +18,11 @@ Plug 'cappyzawa/trim.nvim'
 ## How to setup
 
 ```vim
-lua require('trim').setup()
-" optional
-autocmd BufWritePre * Trim
-" if you want to ignore based on filetype
-let trimignore = ['markdown']
-autocmd BufWritePre * if index(trimignore, &ft) < 0 | Trim
+lua <<EOF
+  require('trim').setup({
+    -- if you want to ignore markdown file.
+    -- you can specify filetypes.
+    disable = {"markdown"},
+  })
+EOF
 ```
