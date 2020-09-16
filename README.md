@@ -16,7 +16,5 @@ Plug 'cappyzawa/trim.nvim'
 ## How to setup
 
 ```vim
-lua << EOF
 lua require('trim').setup()
-EOF
 ```
