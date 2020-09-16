@@ -17,4 +17,6 @@ Plug 'cappyzawa/trim.nvim'
 
 ```vim
 lua require('trim').setup()
+" optional
+autocmd BufWritePre * Trim
 ```
