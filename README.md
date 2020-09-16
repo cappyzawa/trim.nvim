@@ -1,11 +1,6 @@
 # trim.nvim
 
-This plugin trims whitespace and trailing lines.
-
-**TODO**
-
-- [x] whitespace
-- [ ] trailing lines
+This plugin trims trailing whitespace and lines.
 
 ## How to install
 
