@@ -7,8 +7,12 @@ local trimmer = {
     local lines = api.nvim_buf_get_lines(bufnr, startLine, endLine, true)
     local newLines = {}
     local endIndex = #lines
-    while endIndex > 0 and lines[endIndex] == "" do
-      endIndex = endIndex - 1
+    while endIndex > 0 do
+      if lines[endIndex] == "" then
+        endIndex = endIndex - 1
+      else
+        break
+      end
     end
     for i=1, endIndex, 1 do
       local newLine = string.gsub(lines[i], "%s+$", "")
