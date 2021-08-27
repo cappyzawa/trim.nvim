@@ -9,7 +9,6 @@ local trimmer = {
     api.nvim_exec([[silent! %s/\%^\n\+//]], false)
     -- reference: https://unix.stackexchange.com/questions/12812/replacing-multiple-blank-lines-with-a-single-blank-line-in-vim-sed
     api.nvim_exec([[silent! %s/\(\n\n\)\n\+/\1/]], false)
-    
   end
 }
 
