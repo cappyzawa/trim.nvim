@@ -18,7 +18,7 @@ Plug 'cappyzawa/trim.nvim'
 ## How to setup
 
 ```lua
-# default config
+-- default config
 local config = {
   disable = {},
   patterns = {
