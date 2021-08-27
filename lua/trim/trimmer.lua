@@ -1,15 +1,13 @@
 local vim = vim
 local api = vim.api
+local cfg = require'trim.config'
+
 local trimmer = {
-  trim = function (arg, startLine, endLine)
+  trim = function ()
     local save = vim.fn.winsaveview()
-    -- reference: https://vim.fandom.com/wiki/Remove_unwanted_spaces
-    api.nvim_exec([[silent! %s/\s\+$//e]], false)
-    -- reference: https://stackoverflow.com/questions/7495932/how-can-i-trim-blank-lines-at-the-end-of-file-in-vim
-    api.nvim_exec([[silent! %s#\($\n\s*\)\+\%$##]], false)
-    api.nvim_exec([[silent! %s/\%^\n\+//]], false)
-    -- reference: https://unix.stackexchange.com/questions/12812/replacing-multiple-blank-lines-with-a-single-blank-line-in-vim-sed
-    api.nvim_exec([[silent! %s/\(\n\n\)\n\+/\1/]], false)
+    for _, v in pairs(cfg.patterns) do
+      api.nvim_exec(string.format("silent! %s", v), false)
+    end
     vim.fn.winrestview(save)
   end
 }

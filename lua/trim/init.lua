@@ -1,24 +1,27 @@
 local vim = vim
+local config = require'trim.config'
+
 local M = {}
 
-function M.setup(o)
-  vim.cmd [=[command! -nargs=? -range=% -bang Trim lua require"trim.trimmer".trim(<q-args>, <line1>, <line2>)]=]
-
-  setAutocmd(o)
-end
-
-function setAutocmd(o)
-  local config = require("trim.config")
-  local disable = o.disable
-  if #disable == 0 then disable = config.default_disable end
-  local excepts = {}
-  for _, v in pairs(disable) do
-    table.insert(excepts, string.format("&filetype != '%s'", v))
+M.setup = function(cfg)
+  if cfg.disable then
+    config.disable = cfg.disable
   end
-  vim.cmd [=[augroup TrimNvim]=]
-  vim.cmd [=[  autocmd!]=]
-  vim.cmd (string.format("  autocmd BufWritePre * if %s | Trim | endif", table.concat(excepts, " && ")))
-  vim.cmd [=[augroup END]=]
+
+  if cfg.patterns then
+    config.patterns = cfg.patterns
+  end
+
+  vim.cmd [[augroup TrimNvim]]
+  vim.cmd [[  autocmd!]]
+  if not cfg.disable then
+    vim.cmd [[ autocmd BufWritePre * Trim]]
+  else
+    for _, v in pairs(config.disable) do
+      vim.cmd (string.format("  autocmd BufWritePre * if &filetype != '%s' | Trim", v))
+    end
+  end
+  vim.cmd [[augroup END]]
 end
 
 return M
