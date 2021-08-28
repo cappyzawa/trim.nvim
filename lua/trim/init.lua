@@ -17,9 +17,11 @@ M.setup = function(cfg)
   if not cfg.disable then
     vim.cmd [[ autocmd BufWritePre * Trim]]
   else
+    local disables = {}
     for _, v in pairs(config.disable) do
-      vim.cmd (string.format("  autocmd BufWritePre * if &filetype != '%s' | Trim", v))
+      table.insert(disables, string.format("&filetype != '%s'", v))
     end
+    vim.cmd (string.format("  autocmd BufWritePre * if %s | Trim", table.concat(disables, " && ")))
   end
   vim.cmd [[augroup END]]
 end
