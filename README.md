@@ -46,4 +46,4 @@ lua <<EOF
   })
 EOF
 ```
-To save without formatting, use `:noa w`
+*If you save **without** formatting, use `:noa w`*
