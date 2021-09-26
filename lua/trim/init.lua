@@ -14,7 +14,7 @@ M.setup = function(cfg)
 
   vim.cmd [[augroup TrimNvim]]
   vim.cmd [[  autocmd!]]
-  if not cfg.disable then
+  if #cfg.disable == 0 then
     vim.cmd [[ autocmd BufWritePre * Trim]]
   else
     local disables = {}
