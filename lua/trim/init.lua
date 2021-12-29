@@ -1,9 +1,9 @@
 local vim = vim
 local config = require 'trim.config'
 
-local M = {}
+local init = {}
 
-M.setup = function(cfg)
+init.setup = function(cfg)
     if cfg.disable then config.disable = cfg.disable end
 
     if cfg.patterns then config.patterns = cfg.patterns end
@@ -24,4 +24,4 @@ M.setup = function(cfg)
     vim.cmd [[augroup END]]
 end
 
-return M
+return init
