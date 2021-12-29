@@ -11,14 +11,15 @@ M.setup = function(cfg)
     vim.cmd [[augroup TrimNvim]]
     vim.cmd [[  autocmd!]]
     if #config.disable == 0 then
-        vim.cmd [[ autocmd BufWritePre * Trim]]
+        vim.cmd [[ autocmd BufWritePre * lua require'trim.trimmer'.trim() ]]
     else
         local disables = {}
         for _, v in pairs(config.disable) do
             table.insert(disables, string.format("&filetype != '%s'", v))
         end
-        vim.cmd(string.format("  autocmd BufWritePre * if %s | Trim",
-                              table.concat(disables, " && ")))
+        vim.cmd(string.format(
+                    "  autocmd BufWritePre * if %s | lua require'trim.trimmer'.trim()",
+                    table.concat(disables, " && ")))
     end
     vim.cmd [[augroup END]]
 end
