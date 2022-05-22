@@ -9,6 +9,8 @@ This plugin trims trailing whitespace and lines.
 
 Neovim v0.5.0+
 
+***It will soon only work with Neovim v0.7.0+.***  
+
 ## How to install
 
 ```vim
