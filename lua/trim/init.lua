@@ -25,7 +25,7 @@ M.setup = function(cfg)
       pattern = '*',
       callback = function()
         if not has_value(cfg.disable, vim.bo.filetype) then
-          require 'trim.trimmer'.trim()
+          require 'trim.trimmer'.trim(cfg.patterns)
         end
       end,
       group = 'TrimNvim'

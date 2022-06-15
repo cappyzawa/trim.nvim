@@ -1,12 +1,11 @@
 local vim = vim
 local api = vim.api
-local cfg = require 'trim.config'
 
 local trimmer = {}
 
-trimmer.trim = function()
+trimmer.trim = function(patterns)
     local save = vim.fn.winsaveview()
-    for _, v in pairs(cfg.patterns) do
+    for _, v in pairs(patterns) do
         api.nvim_exec(string.format("keepjumps keeppatterns silent! %s", v), false)
     end
     vim.fn.winrestview(save)
