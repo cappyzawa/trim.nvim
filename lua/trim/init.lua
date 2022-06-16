@@ -1,5 +1,6 @@
 local vim = vim
 local config = require 'trim.config'
+local trimmer = require 'trim.trimmer'
 
 local M = {}
 
@@ -25,7 +26,7 @@ M.setup = function(cfg)
       pattern = '*',
       callback = function()
         if not has_value(cfg.disable, vim.bo.filetype) then
-          require 'trim.trimmer'.trim(cfg.patterns)
+          trimmer.trim(cfg.patterns)
         end
       end,
       group = 'TrimNvim'
