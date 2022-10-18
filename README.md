@@ -21,12 +21,10 @@ Plug 'cappyzawa/trim.nvim'
 -- default config
 local config = {
   disable = {},
-  patterns = {
-    [[%s/\s\+$//e]],           -- remove unwanted spaces
-    [[%s/\($\n\s*\)\+\%$//]],  -- trim last line
-    [[%s/\%^\n\+//]],          -- trim first line
-    [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
-  },
+  patterns = {},
+  trim_trailing = true,
+  trim_last_line = true,
+  trim_first_line = true,
 }
 ```
 
@@ -37,11 +35,9 @@ lua <<EOF
     -- you can specify filetypes.
     disable = {"markdown"},
 
-    -- if you want to ignore space of top
+    -- if you want to remove multiple blank lines
     patterns = {
-      [[%s/\s\+$//e]],
-      [[%s/\($\n\s*\)\+\%$//]],
-      [[%s/\(\n\n\)\n\+/\1/]],
+      [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
     },
   })
 EOF

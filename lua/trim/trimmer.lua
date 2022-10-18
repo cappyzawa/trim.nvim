@@ -5,7 +5,7 @@ local trimmer = {}
 
 trimmer.trim = function(patterns)
 	local save = vim.fn.winsaveview()
-	for _, v in pairs(patterns) do
+	for _, v in ipairs(patterns) do
 		api.nvim_exec(string.format("keepjumps keeppatterns silent! %s", v), false)
 	end
 	vim.fn.winrestview(save)
