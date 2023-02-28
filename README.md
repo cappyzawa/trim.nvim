@@ -11,15 +11,31 @@ This plugin trims trailing whitespace and lines.
 
 ## How to install
 
-```vim
-Plug 'cappyzawa/trim.nvim'
+### Lazy
+
+```lua
+require("lazy").setup({
+  "cappyzawa/trim.nvim",
+  opts = {}
+}, opt)
+```
+
+### Packer
+
+```lua
+use({ 
+  "cappyzawa/trim.nvim",
+  config = function()
+    require("trim").setup({})
+  end
+})
 ```
 
 ## How to setup
 
 ```lua
 -- default config
-local config = {
+local default_config = {
   disable = {},
   patterns = {},
   trim_trailing = true,
@@ -28,18 +44,21 @@ local config = {
 }
 ```
 
-```vim
-lua <<EOF
-  require('trim').setup({
-    -- if you want to ignore markdown file.
-    -- you can specify filetypes.
-    disable = {"markdown"},
+```lua
+require('trim').setup({
+  -- if you want to ignore markdown file.
+  -- you can specify filetypes.
+  disable = {"markdown"},
 
-    -- if you want to remove multiple blank lines
-    patterns = {
-      [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
-    },
-  })
-EOF
+  -- if you want to remove multiple blank lines
+  patterns = {
+    [[%s/\(\n\n\)\n\+/\1/]],   -- replace multiple blank lines with a single line
+  },
+})
 ```
-*If you save **without** formatting, use `:noa w`*
+
+## Commands
+
+### `:TrimToggle`
+
+Toggle trim on save.
