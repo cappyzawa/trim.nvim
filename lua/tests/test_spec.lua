@@ -1,6 +1,5 @@
 local eq = assert.are.same
 local trimmer = require 'trim.trimmer'
-local config = require 'trim.config'
 
 describe('trimmer.trim', function()
   -- TODO
