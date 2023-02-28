@@ -1,8 +1,17 @@
 local vim = vim
-local config = require 'trim.config'
 local trimmer = require 'trim.trimmer'
 
-local M = {}
+local default_config = {
+  disable = {},
+  patterns = {},
+  trim_trailing = true,
+  trim_last_line = true,
+  trim_first_line = true,
+}
+
+local M = {
+  config = {},
+}
 
 local has_value = function(tbl, val)
   for _, v in ipairs(tbl) do
@@ -13,38 +22,55 @@ local has_value = function(tbl, val)
   return false
 end
 
-M.setup = function(cfg)
-  cfg = cfg or {}
-  if not cfg.disable then cfg.disable = config.disable end
-  if not cfg.patterns then cfg.patterns = config.patterns end
-  if cfg.trim_trailing == nil then cfg.trim_trailing = config.trim_trailing end
-  if cfg.trim_first_line == nil then cfg.trim_first_line = config.trim_first_line end
-  if cfg.trim_last_line == nil then cfg.trim_last_line = config.trim_last_line end
+function M.setup(opts)
+  opts = opts or {}
+  M.config = vim.tbl_deep_extend('force', default_config, opts)
 
-  if cfg.trim_first_line then
-    table.insert(cfg.patterns, [[%s/\%^\n\+//]])
+  if M.config.trim_first_line then
+    table.insert(M.config.patterns, [[%s/\%^\n\+//]])
   end
-  if cfg.trim_last_line then
-    table.insert(cfg.patterns, [[%s/\($\n\s*\)\+\%$//]])
+  if M.config.trim_last_line then
+    table.insert(M.config.patterns, [[%s/\($\n\s*\)\+\%$//]])
   end
-  if cfg.trim_trailing then
-    table.insert(cfg.patterns, 1, [[%s/\s\+$//e]])
+  if M.config.trim_trailing then
+    table.insert(M.config.patterns, 1, [[%s/\s\+$//e]])
   end
 
-  if not vim.api.nvim_create_autocmd then
-    vim.notify_once('trim.nvim requires nvim 0.7.0+.', vim.log.levels.ERROR)
+  M.enable(true)
+end
+
+function M.toggle()
+  local status = pcall(vim.api.nvim_get_autocmds, {
+    group = 'TrimNvim',
+    event = 'BufWritePre',
+  })
+  if not status then
+    M.enable(false)
   else
-    vim.api.nvim_create_augroup('TrimNvim', { clear = true })
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      pattern = '*',
-      callback = function()
-        if not has_value(cfg.disable, vim.bo.filetype) then
-          trimmer.trim(cfg.patterns)
-        end
-      end,
-      group = 'TrimNvim'
-    })
+    M.disable()
   end
+end
+
+function M.enable(is_configured)
+  local opts = { pattern = '*' }
+  vim.api.nvim_create_augroup('TrimNvim', { clear = true })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = 'TrimNvim',
+    pattern = opts.pattern,
+    callback = function()
+      if not has_value(M.config.disable, vim.bo.filetype) then
+        trimmer.trim(M.config.patterns)
+      end
+    end,
+  })
+  if not is_configured then
+    vim.notify('TrimNvim enabled', vim.log.levels.INFO, { title = 'trim.nvim' })
+  end
+end
+
+function M.disable()
+  pcall(vim.api.nvim_del_augroup_by_name, 'TrimNvim')
+  vim.notify('TrimNvim disabled', vim.log.levels.INFO, { title = 'trim.nvim' })
 end
 
 return M
