@@ -61,7 +61,9 @@ function M.enable(is_configured)
     group = 'TrimNvim',
     pattern = opts.pattern,
     callback = function()
-      M.trim()
+      if not has_value(M.config.blacklist, vim.bo.filetype) then
+        M.trim()
+      end
     end,
   })
   if not is_configured then
@@ -75,9 +77,7 @@ function M.disable()
 end
 
 function M.trim()
-  if not has_value(M.config.blacklist, vim.bo.filetype) then
-    trimmer.trim(M.config.patterns)
-  end
+  trimmer.trim(M.config.patterns)
 end
 
 return M
