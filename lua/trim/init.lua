@@ -25,6 +25,12 @@ end
 
 function M.setup(opts)
   opts = opts or {}
+
+  -- compatability: disable -> blacklist
+  if (opts.disable and not opts.blacklist) then
+    opts.blacklist = opts.disable
+  end
+
   M.config = vim.tbl_deep_extend('force', default_config, opts)
 
   if M.config.trim_first_line then
