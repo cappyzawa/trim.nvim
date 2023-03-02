@@ -14,7 +14,7 @@ end, {
   range = false,
 })
 
-vim.api.nvim_create_user_command('TrimNow', function(args)
+vim.api.nvim_create_user_command('Trim', function(args)
   require('trim').trim()
 end, {
   range = false,

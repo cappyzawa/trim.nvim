@@ -67,6 +67,6 @@ require('trim').setup({
 
 Toggle trim on save.
 
-### `:TrimNow`
+### `:Trim`
 
 Trim the buffer right away.
