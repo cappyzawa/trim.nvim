@@ -27,7 +27,8 @@ function M.setup(opts)
   opts = opts or {}
 
   -- compatability: disable -> ft_blocklist
-  if (opts.disable and not opts.ft_blocklist) then
+  if opts.disable and not opts.ft_blocklist then
+    vim.notify('`disable` is deprecated, use `ft_blocklist` instead', vim.log.levels.WARN, { title = 'trim.nvim' })
     opts.ft_blocklist = opts.disable
   end
 
