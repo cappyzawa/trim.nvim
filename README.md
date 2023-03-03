@@ -36,7 +36,7 @@ use({
 ```lua
 -- default config
 local default_config = {
-  blacklist = {},
+  ft_blocklist = {},
   patterns = {},
   trim_on_write = true,
   trim_trailing = true,
@@ -49,7 +49,7 @@ local default_config = {
 require('trim').setup({
   -- if you want to ignore markdown file.
   -- you can specify filetypes.
-  blacklist = {"markdown"},
+  ft_blocklist = {"markdown"},
 
   -- if you want to remove multiple blank lines
   patterns = {

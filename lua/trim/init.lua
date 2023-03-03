@@ -2,7 +2,7 @@ local vim = vim
 local trimmer = require 'trim.trimmer'
 
 local default_config = {
-  blacklist = {},
+  ft_blocklist = {},
   patterns = {},
   trim_on_write = true,
   trim_trailing = true,
@@ -26,9 +26,9 @@ end
 function M.setup(opts)
   opts = opts or {}
 
-  -- compatability: disable -> blacklist
-  if (opts.disable and not opts.blacklist) then
-    opts.blacklist = opts.disable
+  -- compatability: disable -> ft_blocklist
+  if (opts.disable and not opts.ft_blocklist) then
+    opts.ft_blocklist = opts.disable
   end
 
   M.config = vim.tbl_deep_extend('force', default_config, opts)
@@ -67,7 +67,7 @@ function M.enable(is_configured)
     group = 'TrimNvim',
     pattern = opts.pattern,
     callback = function()
-      if not has_value(M.config.blacklist, vim.bo.filetype) then
+      if not has_value(M.config.ft_blocklist, vim.bo.filetype) then
         M.trim()
       end
     end,
