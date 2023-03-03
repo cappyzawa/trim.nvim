@@ -13,3 +13,9 @@ vim.api.nvim_create_user_command('TrimToggle', function(args)
 end, {
   range = false,
 })
+
+vim.api.nvim_create_user_command('Trim', function(args)
+  require('trim').trim()
+end, {
+  range = false,
+})

@@ -2,8 +2,9 @@ local vim = vim
 local trimmer = require 'trim.trimmer'
 
 local default_config = {
-  disable = {},
+  ft_blocklist = {},
   patterns = {},
+  trim_on_write = true,
   trim_trailing = true,
   trim_last_line = true,
   trim_first_line = true,
@@ -24,6 +25,12 @@ end
 
 function M.setup(opts)
   opts = opts or {}
+
+  -- compatability: disable -> ft_blocklist
+  if (opts.disable and not opts.ft_blocklist) then
+    opts.ft_blocklist = opts.disable
+  end
+
   M.config = vim.tbl_deep_extend('force', default_config, opts)
 
   if M.config.trim_first_line then
@@ -36,7 +43,9 @@ function M.setup(opts)
     table.insert(M.config.patterns, 1, [[%s/\s\+$//e]])
   end
 
-  M.enable(true)
+  if M.config.trim_on_write then
+    M.enable(true)
+  end
 end
 
 function M.toggle()
@@ -58,8 +67,8 @@ function M.enable(is_configured)
     group = 'TrimNvim',
     pattern = opts.pattern,
     callback = function()
-      if not has_value(M.config.disable, vim.bo.filetype) then
-        trimmer.trim(M.config.patterns)
+      if not has_value(M.config.ft_blocklist, vim.bo.filetype) then
+        M.trim()
       end
     end,
   })
@@ -71,6 +80,10 @@ end
 function M.disable()
   pcall(vim.api.nvim_del_augroup_by_name, 'TrimNvim')
   vim.notify('TrimNvim disabled', vim.log.levels.INFO, { title = 'trim.nvim' })
+end
+
+function M.trim()
+  trimmer.trim(M.config.patterns)
 end
 
 return M
