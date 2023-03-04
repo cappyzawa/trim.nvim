@@ -22,14 +22,14 @@ function M.setup(opts)
 
   M.config = vim.tbl_deep_extend('force', default_config, opts)
 
+  if M.config.trim_trailing then
+    table.insert(M.config.patterns, [[%s/\s\+$//e]])
+  end
   if M.config.trim_first_line then
     table.insert(M.config.patterns, [[%s/\%^\n\+//]])
   end
   if M.config.trim_last_line then
     table.insert(M.config.patterns, [[%s/\($\n\s*\)\+\%$//]])
-  end
-  if M.config.trim_trailing then
-    table.insert(M.config.patterns, 1, [[%s/\s\+$//e]])
   end
 end
 
