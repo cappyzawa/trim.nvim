@@ -1,4 +1,4 @@
-*trim.nvim.txt*         For Neovim >= 0.7.0         Last change: 2023 March 04
+*trim.nvim.txt*         For Neovim >= 0.7.0         Last change: 2023 March 22
 
 ==============================================================================
 Table of Contents                                *trim.nvim-table-of-contents*
