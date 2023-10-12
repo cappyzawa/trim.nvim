@@ -10,7 +10,7 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Install Neovim
       shell: bash
       run: |
@@ -36,7 +36,7 @@ jobs:
     needs: tests
     if: ${{ github.ref == 'refs/heads/master' }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: panvimdoc
       uses: kdheepak/panvimdoc@main
       with:
