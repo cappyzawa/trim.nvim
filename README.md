@@ -42,6 +42,8 @@ local default_config = {
   trim_trailing = true,
   trim_last_line = true,
   trim_first_line = true,
+  highlight = false,
+  highlight_bg = 'red',
 }
 ```
 
@@ -58,6 +60,9 @@ require('trim').setup({
 
   -- if you want to disable trim on write by default
   trim_on_write = false,
+
+  -- highlight trailing spaces
+  highlight = true
 })
 ```
 
