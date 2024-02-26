@@ -1,4 +1,4 @@
-*trim.nvim.txt*        For Neovim >= 0.7.0        Last change: 2023 October 12
+*trim.nvim.txt*        For Neovim >= 0.7.0       Last change: 2024 February 26
 
 ==============================================================================
 Table of Contents                                *trim.nvim-table-of-contents*
@@ -58,6 +58,8 @@ HOW TO SETUP                                *trim.nvim-trim.nvim-how-to-setup*
       trim_trailing = true,
       trim_last_line = true,
       trim_first_line = true,
+      highlight = false,
+      highlight_bg = 'red',
     }
 <
 
@@ -74,6 +76,9 @@ HOW TO SETUP                                *trim.nvim-trim.nvim-how-to-setup*
     
       -- if you want to disable trim on write by default
       trim_on_write = false,
+    
+      -- highlight trailing spaces
+      highlight = true
     })
 <
 
