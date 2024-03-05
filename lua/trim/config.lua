@@ -11,6 +11,7 @@ local default_config = {
   trim_first_line = true,
   highlight = false,
   highlight_bg = 'red',
+  highlight_ctermbg = 'red',
 }
 
 function M.setup(opts)
@@ -35,11 +36,7 @@ function M.setup(opts)
   end
 
   if M.config.highlight then
-    local highlight_cmd = string.format([[
-      highlight ExtraWhitespace ctermbg=%s guibg=%s
-    ]], M.config.highlight_bg, M.config.highlight_bg)
-
-    vim.api.nvim_exec(highlight_cmd, false)
+    vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg = M.config.highlight_bg, ctermbg = M.config.highlight_ctermbg })
 
     vim.api.nvim_exec([[
       match ExtraWhitespace /\s\+$/
