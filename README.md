@@ -44,6 +44,7 @@ local default_config = {
   trim_first_line = true,
   highlight = false,
   highlight_bg = 'red',
+  highlight_ctermbg = 'red',
 }
 ```
 
