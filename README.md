@@ -43,7 +43,7 @@ local default_config = {
   trim_last_line = true,
   trim_first_line = true,
   highlight = false,
-  highlight_bg = 'red',
+  highlight_bg = '#ff0000',
   highlight_ctermbg = 'red',
 }
 ```
