@@ -36,14 +36,27 @@ function M.setup(opts)
   end
 
   if M.config.highlight then
-    vim.api.nvim_set_hl(0, 'ExtraWhitespace', { bg = M.config.highlight_bg, ctermbg = M.config.highlight_ctermbg })
+    local augroup = vim.api.nvim_create_augroup('TrimHighlight', { clear = true })
 
-    vim.api.nvim_exec(
-      [[
-      match ExtraWhitespace /\s\+$/
-    ]],
-      false
-    )
+    -- Define the autocommand for FileType events
+    vim.api.nvim_create_autocmd('FileType', {
+      group = augroup,
+      pattern = '*', -- This will trigger the autocmd for all file types
+      callback = function()
+        -- Check if the current file type is not in the blocklist to avoid highlighting
+        if not vim.tbl_contains(M.config.ft_blocklist, vim.bo.filetype) then
+          -- Apply highlighting for trailing whitespace
+          vim.api.nvim_set_hl(0, 'ExtraWhitespace', {
+            bg = M.config.highlight_bg,
+            ctermbg = M.config.highlight_ctermbg
+          })
+          vim.api.nvim_exec('match ExtraWhitespace /\\s\\+$/', false)
+        else
+          -- Clear the highlighting for this buffer if the file type is in the blocklist
+          vim.api.nvim_exec('match none', false)
+        end
+      end,
+    })
   end
 end
 
