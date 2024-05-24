@@ -42,6 +42,7 @@ local default_config = {
   trim_trailing = true,
   trim_last_line = true,
   trim_first_line = true,
+  trim_changed_only = false, -- Trim only lines changed from last save
   highlight = false,
   highlight_bg = '#ff0000', -- or 'red'
   highlight_ctermbg = 'red',
