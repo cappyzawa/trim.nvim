@@ -13,7 +13,7 @@ function trimmer.changed_blocks()
   local filename = vim.api.nvim_buf_get_name(0)
 
   if vim.fn.filereadable(filename) == 0 then
-    return {1, vim.fn.line('$')}
+    return {{1, vim.fn.line('$')}}
   end
 
   if vim.bo.modified then
