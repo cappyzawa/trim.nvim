@@ -32,6 +32,10 @@ describe('default config', function()
     assert.are.equal(actual.patterns[2], [[%s/\%^\n\+//]])
     assert.are.equal(actual.patterns[3], [[%s/\($\n\s*\)\+\%$//]])
   end)
+
+  it('has notifications enabled', function()
+    assert.is_true(actual.notifications)
+  end)
 end)
 
 describe('config', function()
