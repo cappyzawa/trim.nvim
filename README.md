@@ -45,6 +45,7 @@ local default_config = {
   highlight = false,
   highlight_bg = '#ff0000', -- or 'red'
   highlight_ctermbg = 'red',
+  notifications = true,
 }
 ```
 
