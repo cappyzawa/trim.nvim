@@ -1,4 +1,4 @@
-*trim.nvim.txt*         For Neovim >= 0.7.0         Last change: 2024 March 15
+*trim.nvim.txt*        For Neovim >= 0.7.0        Last change: 2024 October 13
 
 ==============================================================================
 Table of Contents                                *trim.nvim-table-of-contents*
@@ -8,6 +8,7 @@ Table of Contents                                *trim.nvim-table-of-contents*
   - How to install                        |trim.nvim-trim.nvim-how-to-install|
   - How to setup                            |trim.nvim-trim.nvim-how-to-setup|
   - Commands                                    |trim.nvim-trim.nvim-commands|
+2. Links                                                     |trim.nvim-links|
 
 ==============================================================================
 1. trim.nvim                                             *trim.nvim-trim.nvim*
@@ -61,6 +62,7 @@ HOW TO SETUP                                *trim.nvim-trim.nvim-how-to-setup*
       highlight = false,
       highlight_bg = '#ff0000', -- or 'red'
       highlight_ctermbg = 'red',
+      notifications = true,
     }
 <
 
