@@ -51,10 +51,10 @@ function M.setup(opts)
             bg = M.config.highlight_bg,
             ctermbg = M.config.highlight_ctermbg,
           })
-          vim.api.nvim_exec('match ExtraWhitespace /\\s\\+$/', false)
+          vim.api.nvim_exec2('match ExtraWhitespace /\\s\\+$/', { output = false })
         else
           -- Clear the highlighting for this buffer if the file type is in the blocklist
-          vim.api.nvim_exec('match none', false)
+          vim.api.nvim_exec2('match none', { output = false })
         end
       end,
     })
