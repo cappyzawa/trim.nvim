@@ -12,6 +12,7 @@ local default_config = {
   highlight = false,
   highlight_bg = '#ff0000',
   highlight_ctermbg = 'red',
+  notifications = true,
 }
 
 function M.setup(opts)
@@ -48,7 +49,7 @@ function M.setup(opts)
           -- Apply highlighting for trailing whitespace
           vim.api.nvim_set_hl(0, 'ExtraWhitespace', {
             bg = M.config.highlight_bg,
-            ctermbg = M.config.highlight_ctermbg
+            ctermbg = M.config.highlight_ctermbg,
           })
           vim.api.nvim_exec('match ExtraWhitespace /\\s\\+$/', false)
         else

@@ -34,22 +34,31 @@ function trimmer.enable(is_configured)
       end
     end,
   })
-  if not is_configured then
+  if config.notifications and not is_configured then
     vim.notify('TrimNvim enabled', vim.log.levels.INFO, { title = 'trim.nvim' })
   end
 end
 
 function trimmer.disable()
   pcall(vim.api.nvim_del_augroup_by_name, 'TrimNvim')
-  vim.notify('TrimNvim disabled', vim.log.levels.INFO, { title = 'trim.nvim' })
+  if require('trim.config').get().notifications then
+    vim.notify('TrimNvim disabled', vim.log.levels.INFO, { title = 'trim.nvim' })
+  end
 end
 
-function trimmer.toggle()
+function trimmer.is_enabled()
   local status = pcall(vim.api.nvim_get_autocmds, {
     group = 'TrimNvim',
     event = 'BufWritePre',
   })
   if not status then
+    return false
+  end
+  return true
+end
+
+function trimmer.toggle()
+  if not trimmer.is_enabled() then
     trimmer.enable(false)
   else
     trimmer.disable()
