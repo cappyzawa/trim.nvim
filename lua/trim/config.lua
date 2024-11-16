@@ -37,10 +37,7 @@ function M.setup(opts)
   end
 
   if M.config.highlight then
-    local highlighter = require 'trim.highlighter'
-    vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'TextChangedI' }, {
-      callback = highlighter.highlight,
-    })
+    require("trim.highlighter").setup()
   end
 end
 
