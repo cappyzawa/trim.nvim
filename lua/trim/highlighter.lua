@@ -56,7 +56,7 @@ function highlighter.setup()
   })
 
   local augroup = vim.api.nvim_create_augroup('TrimHighlight', { clear = true })
-  vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'TermEnter' }, {
     group = augroup,
     callback = function()
       if vim.bo.buftype == '' and not has_value(config.ft_blocklist, vim.bo.filetype) then
@@ -71,7 +71,7 @@ function highlighter.setup()
 
   -- After cursor left window, the matches related to cursor would not work,
   -- so clear them on BufLeave/WinLeave
-  vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
+  vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave', 'TermLeave' }, {
     group = augroup,
     callback = function()
       delete_cursor_matches()
