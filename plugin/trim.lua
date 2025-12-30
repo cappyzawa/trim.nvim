@@ -17,7 +17,7 @@ end, {
 })
 
 vim.api.nvim_create_user_command('Trim', function(args)
-  trimmer.trim()
+  trimmer.trim(args.range, args.line1, args.line2)
 end, {
-  range = false,
+  range = '%',
 })
