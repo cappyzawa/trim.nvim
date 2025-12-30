@@ -4,36 +4,40 @@ on:
   pull_request:
 
 jobs:
-  tests:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+  lint:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Install Neovim
-      shell: bash
-      run: |
-        mkdir -p /tmp/nvim
-        wget -q https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage -O /tmp/nvim/nvim.appimage
-        cd /tmp/nvim
-        chmod a+x ./nvim.appimage
-        ./nvim.appimage --appimage-extract
-        echo "/tmp/nvim/squashfs-root/usr/bin/" >> $GITHUB_PATH
     - name: Run Lints
       uses: lunarmodules/luacheck@v1
       with:
         args: lua/trim
+
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        rev: [nightly, stable, v0.10.4]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+    - uses: rhysd/action-setup-vim@v1
+      with:
+        neovim: true
+        version: ${{ matrix.rev }}
+    - name: Prepare
+      run: |
+        git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ../plenary.nvim
     - name: Run Tests
       run: |
-        alias nvim="/tmp/nvim-linux64/bin/nvim"
         nvim --version
         [ ! -d tests ] && exit 0
         nvim --headless -u tests/init.lua -c "PlenaryBustedDirectory tests/ {minimal_init = 'tests/init.lua', sequential = true}"
 
   docs:
     runs-on: ubuntu-latest
-    needs: tests
+    needs: [lint, tests]
     if: ${{ github.ref == 'refs/heads/master' }}
     steps:
     - uses: actions/checkout@v4
