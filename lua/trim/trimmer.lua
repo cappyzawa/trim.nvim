@@ -12,7 +12,24 @@ function trimmer.trim(range, line1, line2)
     local cmd = string.format('keepjumps keeppatterns silent! %d,%ds/\\s\\+$//e', line1, line2)
     api.nvim_exec2(cmd, {})
   else
-    -- no range: apply all patterns to the entire buffer
+    -- trim_trailing with cursor line exclusion
+    if config.trim_trailing and not config.trim_current_line then
+      local lnum = vim.api.nvim_win_get_cursor(0)[1]
+      local last = vim.api.nvim_buf_line_count(0)
+
+      -- trim lines above cursor
+      if lnum > 1 then
+        local cmd = string.format('keepjumps keeppatterns silent! 1,%ds/\\s\\+$//e', lnum - 1)
+        api.nvim_exec2(cmd, {})
+      end
+      -- trim lines below cursor
+      if lnum < last then
+        local cmd = string.format('keepjumps keeppatterns silent! %d,$s/\\s\\+$//e', lnum + 1)
+        api.nvim_exec2(cmd, {})
+      end
+    end
+
+    -- apply other patterns (trim_first_line, trim_last_line, custom patterns)
     for _, v in ipairs(config.patterns) do
       api.nvim_exec2(string.format('keepjumps keeppatterns silent! %s', v), {})
     end

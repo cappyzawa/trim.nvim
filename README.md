@@ -42,6 +42,7 @@ local default_config = {
   trim_trailing = true,
   trim_last_line = true,
   trim_first_line = true,
+  trim_current_line = true,
   highlight = false,
   highlight_bg = '#ff0000', -- or 'red'
   highlight_ctermbg = 'red',
@@ -62,6 +63,10 @@ require('trim').setup({
 
   -- if you want to disable trim on write by default
   trim_on_write = false,
+
+  -- if you want to exclude the current line from trimming
+  -- useful when used with auto-save plugins to avoid deleting auto-indentation
+  trim_current_line = false,
 
   -- highlight trailing spaces
   highlight = true
