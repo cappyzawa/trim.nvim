@@ -15,6 +15,7 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Setup trim.nvim with highlight enabled for easier testing
 require('trim').setup({
+  ft_blocklist = { 'markdown' },
   highlight = true,
   highlight_bg = '#ff0000',
 })
