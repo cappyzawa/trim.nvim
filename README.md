@@ -76,4 +76,6 @@ Toggle trim on save.
 
 ### `:Trim`
 
-Trim the buffer right away.
+Trim the buffer right away. Supports range selection (e.g., `:'<,'>Trim` to trim only selected lines).
+
+When a range is specified, only trailing whitespace is removed within the selected lines. The `trim_first_line` and `trim_last_line` options are not applied in range mode.

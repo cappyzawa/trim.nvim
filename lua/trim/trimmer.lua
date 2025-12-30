@@ -3,12 +3,21 @@ local api = vim.api
 
 local trimmer = {}
 
-function trimmer.trim()
+function trimmer.trim(range, line1, line2)
   local config = require('trim.config').get()
   local save = vim.fn.winsaveview()
-  for _, v in ipairs(config.patterns) do
-    api.nvim_exec(string.format('keepjumps keeppatterns silent! %s', v), false)
+
+  if range and range > 0 then
+    -- range specified: only trim trailing whitespace in the given range
+    local cmd = string.format('keepjumps keeppatterns silent! %d,%ds/\\s\\+$//e', line1, line2)
+    api.nvim_exec2(cmd, {})
+  else
+    -- no range: apply all patterns to the entire buffer
+    for _, v in ipairs(config.patterns) do
+      api.nvim_exec2(string.format('keepjumps keeppatterns silent! %s', v), {})
+    end
   end
+
   vim.fn.winrestview(save)
 end
 
