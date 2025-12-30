@@ -7,7 +7,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Run Lints
       uses: lunarmodules/luacheck@v1
       with:
@@ -21,7 +21,7 @@ jobs:
         rev: [nightly, stable, v0.10.4]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: rhysd/action-setup-vim@v1
       with:
         neovim: true
@@ -40,7 +40,7 @@ jobs:
     needs: [lint, tests]
     if: ${{ github.ref == 'refs/heads/master' }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: panvimdoc
       uses: kdheepak/panvimdoc@main
       with:
