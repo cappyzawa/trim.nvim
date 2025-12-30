@@ -9,6 +9,7 @@ local default_config = {
   trim_trailing = true,
   trim_last_line = true,
   trim_first_line = true,
+  trim_current_line = true,
   highlight = false,
   highlight_bg = '#ff0000',
   highlight_ctermbg = 'red',
@@ -26,7 +27,14 @@ function M.setup(opts)
 
   M.config = vim.tbl_deep_extend('force', default_config, opts)
 
-  if M.config.trim_trailing then
+  -- preserve user-specified patterns, reset if not specified
+  local user_patterns = opts.patterns or {}
+  M.config.patterns = {}
+  for _, p in ipairs(user_patterns) do
+    table.insert(M.config.patterns, p)
+  end
+
+  if M.config.trim_trailing and M.config.trim_current_line then
     table.insert(M.config.patterns, [[%s/\s\+$//e]])
   end
   if M.config.trim_first_line then
