@@ -41,3 +41,6 @@ luac.out
 
 # Tests
 .tests
+
+# Dev sample file
+dev/sample.txt
